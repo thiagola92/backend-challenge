@@ -1,0 +1,30 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  # pgadmin:
+  #   container_name: pgadmin
+  #   image: dpage/pgadmin4
+  #   ports:
+  #     - "15432:80"
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+  #     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+  selecao_api:
+    container_name: selecao_api
+    build: .
+    image: selecao_api
+    ports:
+      - "8000:80"
+    environment:
+      POSTGRES_DSN: ${POSTGRES_DSN}
+      SECRET_KEY: ${SECRET_KEY}
+      API_USERNAME: ${API_USERNAME}
+      API_PASSWORD: ${API_PASSWORD}
+    depends_on:
+      - postgres
